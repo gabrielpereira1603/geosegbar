@@ -19,7 +19,7 @@ class SpringBoot
         return Http::get("{$this->base_url}/{$endpoint}", $params);
     }
 
-    public function post($endpoint, $data = []): Response
+    public function povitest($endpoint, $data = []): Response
     {
         return Http::post("{$this->base_url}/{$endpoint}", $data);
     }
