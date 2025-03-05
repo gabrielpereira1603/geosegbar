@@ -15,11 +15,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen static flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900
+        <div class="min-h-screen relative flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900
                         bg-cover bg-fixed bg-center"
              style="background-image: url({{ asset('images/login/background-login.png') }});">
 
-            <div class="bg-white p-2 w-72 h-auto rounded-[10px] z-50 absolute top-52 sm:top-44 left-1/2 transform -translate-x-1/2 mb-4 sm:mr-8 sm:mb-8 flex justify-center items-center shadow-lg">
+            <div class="logo-fixed shadow-lg">
                 <a href="/" wire:navigate>
                     <x-application-logo
                         width="120"
