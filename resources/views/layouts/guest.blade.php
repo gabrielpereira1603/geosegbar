@@ -29,7 +29,7 @@
                 </a>
             </div>
 
-            <div class="w-full mt-60 sm:mt-12 sm:max-w-md px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg z-0">
+            <div class="w-full mt-60 sm:mt-12 sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg z-0">
                 <div class="-z-10 mt-24">
                     {{ $slot }}
                 </div>
