@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="shortcut icon" href="{{ asset('images/logo-quadrada.png') }}" type="image/x-icon">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
@@ -19,7 +19,7 @@
                         bg-cover bg-fixed bg-center"
              style="background-image: url({{ asset('images/login/background-login.png') }});">
 
-            <div class="logo-fixed shadow-lg">
+            <div class="bg-white p-2 w-72 h-auto rounded-[10px] z-50 absolute top-52 sm:top-44 left-1/2 transform -translate-x-1/2 mb-4 sm:mr-8 sm:mb-8 flex justify-center items-center shadow-lg">
                 <a href="/" wire:navigate>
                     <x-application-logo
                         width="120"
