@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="Sistema de Segurança de Barragem">
     <link rel="shortcut icon" href="{{ asset('images/logo-quadrada.png') }}" type="image/x-icon">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
