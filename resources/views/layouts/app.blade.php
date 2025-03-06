@@ -16,18 +16,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100 " x-data="{ open: true }">
+    <div class="min-h-screen bg-gray-200" x-data="{ open: true }">
 
-    <livewire:layout.navigation />
+        <livewire:layout.navigation />
 
-    <main
-        class="transition-all duration-300 ease-in-out"
-        :class="open ? 'ml-72' : 'ml-0'"
-    >
-        <div class="m-2">
-            {{ $slot }}
-        </div>
-    </main>
-</div>
+        <main
+            class="transition-all duration-300 ease-in-out"
+            :class="open ? 'ml-72' : 'ml-0'"
+        >
+            <div class="m-2">
+                {{ $slot }}
+            </div>
+        </main>
+    </div>
 </body>
 </html>

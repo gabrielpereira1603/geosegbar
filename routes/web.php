@@ -18,3 +18,4 @@ Route::view('dashboard', 'dashboard')
 
 
 require __DIR__.'/auth.php';
+require __DIR__.'/web/users.php';
