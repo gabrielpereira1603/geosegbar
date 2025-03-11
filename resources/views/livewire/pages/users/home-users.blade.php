@@ -10,14 +10,12 @@
 
             <ul class="flex gap-6 flex-col sm:flex-row sm:items-center">
                 <li>
-                    <a href="javascript:void(0)" @click="$dispatch('open-modal', 'edit-phone-user')" focusable>
+                    <a href="javascript:void(0)" >
                         <button class="inline-flex items-center gap-1 px-4 py-2 bg-[#003D60] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900  focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
                             <x-phone-icon widht="16px" height="16px" color="currentColor"/>
                             Alterar o meu telefone
                         </button>
                     </a>
-
-                    <livewire:components.modals.users.edit-phone-modal/>
                 </li>
 
                 <li>
