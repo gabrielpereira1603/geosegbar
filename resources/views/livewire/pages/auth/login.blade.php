@@ -47,11 +47,13 @@
         </div>
 
         <div class="w-full mt-6 mb-4 flex items-center">
-            <button
-                class="w-full flex items-center justify-center p-6 bg-[#003D60] rounded-[10px] uppercase font-bold text-white"
-                onclick="window.location.href='{{ route('home') }}'"
-            >
-                {{ __('Entrar') }}
+            <button type="submit" class="w-full flex items-center justify-center p-6 bg-[#003D60] rounded-[10px] uppercase font-bold text-white">
+                <span wire:loading.remove wire:target="login">
+                    {{ __('Entrar') }}
+                </span>
+                <span wire:loading wire:target="login">
+                    Carregando...
+                </span>
             </button>
         </div>
 

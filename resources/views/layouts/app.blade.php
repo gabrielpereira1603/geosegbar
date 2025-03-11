@@ -15,19 +15,29 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-200" x-data="{ open: true }">
+<body class="font-sans antialiased" x-data>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('sidebar', {
+                openSideMenu: true,
+                toggle() {
+                    this.openSideMenu = !this.openSideMenu;
+                }
+            });
+        });
+    </script>
+    <div class="min-h-screen bg-gray-200" x-data="{ openSideMenu: true }">
 
         <livewire:layout.navigation />
 
         <main
-            class="transition-all duration-300 ease-in-out"
-            :class="open ? 'ml-72' : 'ml-0'"
+            class="transition-all duration-300 ease-in-out flex-1 p-4"
+            :class="$store.sidebar.openSideMenu ? 'ml-20 sm:ml-64' : 'ml-20 sm:ml-14'"
         >
             <div class="m-2">
                 {{ $slot }}
             </div>
         </main>
     </div>
-</body>
+</body>x
 </html>

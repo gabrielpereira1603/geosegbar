@@ -2,31 +2,53 @@
 
 namespace App\Livewire\Pages\Auth;
 
-use App\Livewire\Forms\LoginForm;
-use Illuminate\Support\Facades\Session;
+use App\Livewire\Forms\Auth\LoginForm;
+use App\Services\Auth\AuthService;
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Login extends Component
 {
+    public bool $is_loading = false;
+    private $auth_service;
+
     public LoginForm $form;
+
+    public function __construct()
+    {
+
+        $this->auth_service = new AuthService('user');
+    }
+
 
     public function login()
     {
         try {
-            $this->form->validate();
+            $this->validate();
 
-            // Chama o método de autenticação do LoginForm
-            $this->form->authenticate();
+            $this->is_loading = true;
 
-            if (session()->has('status')) {
-                return $this->redirect('/two-factor-token');
-            } else {
-                Session::regenerate();
-                return $this->redirect('/dashboard');
+            $credentials = [
+                'email' => $this->form->email,
+                'password' => $this->form->password,
+            ];
+
+            $authResponse = $this->auth_service->login($credentials);
+
+            if (isset($authResponse['success']) && $authResponse['success'] === true) {
+                session()->flash('status', $authResponse['message']);
+                session(['two_factor_start' => Carbon::now()]);
+                session(['two_factor_email' => $this->form->email]);
+                return $this->redirect('/token-two-factor');
             }
 
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             throw $e;
+        } catch (\Exception $e) {
+            session()->flash('status', 'Erro ao autenticar: ' . $e->getMessage());
+        } finally {
+            $this->is_loading = false;
         }
     }
 

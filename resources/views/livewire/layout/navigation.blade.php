@@ -16,38 +16,39 @@ new class extends Component
     }
 }; ?>
 
-<div class="flex">
-    <div class="p-4">
-        <button
-            @click="open = true"
-            class="bg-blue-500 text-white p-2 rounded transition-all duration-300 ease-in-out"
-            x-show="!open"
-            x-transition.opacity
-        >
-            <x-menu-icon widht="30px" height="30px" color="#003D60" />
-        </button>
-    </div>
+<div x-data="{ open: true }" class="flex">
     <div
-        class="bg-white text-white fixed h-full top-0 left-0 w-72 transition-all duration-300 ease-in-out transform z-50 shadow-gray-700 shadow-lg"
-        :class="open ? 'translate-x-0' : '-translate-x-72'"
+        class="overflow-y-auto bg-white text-white fixed h-full top-0 left-0 w-72 transition-all duration-300 ease-in-out transform z-50 shadow-gray-700 shadow-lg"
+        :class="open ? 'w-72' : 'w-[80px]'"
     >
+        <div class="p-4 flex items-center justify-center">
+            <button
+                @click="$store.sidebar.toggle(); open = true"
+                class="text-white p-2 rounded transition-all duration-300 ease-in-out"
+                x-show="!open"
+                x-transition.opacity
+            >
+                <x-menu-icon widht="30px" height="30px" color="#003D60" />
+            </button>
+        </div>
+
         <div class="flex justify-around items-center relative">
             <div class="text-xl font-bold">
-                <img src="{{ asset('images/logo-quadrada.png') }}" width="150px" height="150px">
+                <img src="{{ asset('images/logo-quadrada.png') }}" :class="open ? 'w-28' : 'w-14'">
             </div>
 
-            <button @click="open = false" class="bg-transparent p-2 rounded text-white absolute right-4 top-3">
+            <button x-show="open" @click="$store.sidebar.toggle(); open = false" class="bg-transparent p-2 rounded text-white absolute right-4 top-3">
                  <x-arrow-icon widht="30px" height="30px" color="none" />
             </button>
         </div>
 
-        <div class="w-full flex justify-center items-center text-center flex-col pl-5 pr-5">
-            <h1 class="text-black font-sans text-lg font-bold text-center">Olá, João</h1>
+        <div class="w-full flex justify-center items-center text-center flex-col" :class="open ? 'pl-5 pr-5' : 'pl-2 pr-2'">
+            <h1 class="text-black font-sans text-lg font-bold text-center mb-3" x-show="open">Olá, João</h1>
 
             <div class="w-full bg-gray-900 h-[1px]"></div>
         </div>
 
-        <ul class="">
+        <ul x-show="open" x-transition class=" overflow-y-auto">
             <li class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group">
                 <p class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
                     <x-dashboard-icon width="30px" height="30px" color="currentColor"/>
@@ -68,10 +69,7 @@ new class extends Component
 
                 <!-- Campo de Input e Lista de Estruturas -->
                 <div
-                    x-show="open"
-                    x-transition
                     class="mt-5 bg-white border-transparent w-full absolute left-0 z-10 transition-all duration-300"
-                    :style="open ? 'max-height: 300px;' : 'max-height: 0;'"
                 >
                     <div class="relative w-full">
                         <input
@@ -141,8 +139,32 @@ new class extends Component
             </li>
         </ul>
 
-        <small class="text-black flex items-center justify-center mt-16">
+        <ul x-show="!open" x-transition class="mt flex justify-between flex-col items-center text-black h-[50%] mt-[2vw]">
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
+                <x-dashboard-icon width="30px" height="30px" color="currentColor"/>
+            </li>
+
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
+                <x-structure-icon width="30px" height="30px" color="currentColor"/>
+            </li>
+
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
+                <x-user-icon width="30px" height="30px" color="currentColor"/>
+            </li>
+
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
+                <x-suport-icon width="30px" height="30px" color="currentColor"/>
+            </li>
+
+            <li class="p-2 bg-red-500 cursor-pointer rounded-[10px] group hover:text-white">
+                <x-logout-icon width="30px" height="30px" color="currentColor"/>
+            </li>
+        </ul>
+
+        <small x-show="open" class="text-black flex items-center justify-center mt-16">
             Powered by Somos Dev's
         </small>
     </div>
+
+
 </div>
