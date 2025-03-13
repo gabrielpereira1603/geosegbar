@@ -43,7 +43,9 @@ new class extends Component
         </div>
 
         <div class="w-full flex justify-center items-center text-center flex-col" :class="open ? 'pl-5 pr-5' : 'pl-2 pr-2'">
-            <h1 class="text-black font-sans text-lg font-bold text-center mb-3" x-show="open">Olá, João</h1>
+            <h1 class="text-black font-sans text-lg font-bold text-center mb-3" x-show="open">
+                Olá, {{ session('user')['name'] ?? 'Usuário' }}
+            </h1>
 
             <div class="w-full bg-gray-900 h-[1px]"></div>
         </div>
@@ -61,7 +63,7 @@ new class extends Component
                 x-data="{ open: true, estruturas: ['Barragem 1', 'Barragem 2', 'Barragem 3', 'Barragem 4', 'Barragem 5'] }"
             >
                 <p
-                    class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white cursor-pointer"
+                    class="flex items-center justify-start gap-10 text-black font-light group-hover:text-white cursor-pointer"
                 >
                     <x-structure-icon width="30px" height="30px" color="currentColor"/>
                     Estruturas
@@ -71,7 +73,7 @@ new class extends Component
                 <div
                     class="mt-5 bg-white border-transparent w-full absolute left-0 z-10 transition-all duration-300"
                 >
-                    <div class="relative w-full">
+                    <div class="relative w-full" x-data="{ search: '' }">
                         <input
                             type="text"
                             placeholder="Buscar estrutura..."
@@ -117,8 +119,8 @@ new class extends Component
                 </div>
             </li>
 
-            <li class="p-2 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group mt-60 ml-4 mr-4">
-                <p class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
+            <li class="p-2 px-4 cursor-pointer rounded-[10px] group mt-60 ml-4 mr-4 {{ request()->routeIs('users') ? ' bg-[#003D60] group-hover:text-white' : 'hover:bg-transparent' }}">
+                <p class="flex items-center justify-start gap-10 font-bold {{ request()->routeIs('users') ? 'group-hover:text-white' : 'group-hover:text-black' }} ">
                     <x-user-icon width="30px" height="30px" color="currentColor"/>
                     Usuários
                 </p>

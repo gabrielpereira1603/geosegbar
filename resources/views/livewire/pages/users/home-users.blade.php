@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-6 bg-white shadow-xl shadow-gray-400 rounded-[10px] p-6 sm:mr-10 sm:ml-10">
 
         <div class="flex items-center flex-col gap-5 justify-center p-5 sm:p5 bg-gray-100 shadow-xl shadow-gray-400 rounded-[10px]">
-            <h1 class="font-ubuntu flex items-center justify-center gap-4 flex-col w-full text-[#003D60] text-lg font-bold font-sans">
+            <h1 class="font-ubuntu flex items-center justify-center gap-4 flex-col w-full text-[#003D60] text-lg font-bold">
                 Minha Conta
 
                 <div class="w-[100%] sm:w-[400px] h-[1.5px] bg-[#003D60]"></div>
@@ -10,13 +10,14 @@
 
             <ul class="flex gap-6 flex-col sm:flex-row sm:items-center">
                 <li>
-                    <a href="javascript:void(0)" >
+                    <a href="javascript:void(0)" @click="$dispatch('open-modal', 'edit-phone-user')">
                         <button class="font-ubuntu inline-flex items-center gap-1 px-4 py-2 bg-[#003D60] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900  focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
                             <x-phone-icon widht="16px" height="16px" color="currentColor"/>
                             Alterar o meu telefone
                         </button>
                     </a>
                 </li>
+                <livewire:components.modals.users.edit-phone-user-modal/>
 
                 <li>
                     <button class="font-ubuntu inline-flex items-center gap-1 px-4 py-2 bg-[#003D60] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900  focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
@@ -36,11 +37,14 @@
 
         <div class="relative flex items-center flex-col gap-5 justify-center p-5 bg-gray-100 shadow-xl shadow-gray-400 rounded-[10px] overflow-auto">
             <div class="w-full sm-w-auto sm:absolute top-4 left-6 flex items-center">
-                <button class="w-full sm:w-auto font-ubuntu justify-center inline-flex items-center gap-1 px-4 py-2 bg-transparent border border-[#003D60] rounded-md font-semibold text-xs text-[#003D60] uppercase tracking-widest hover:bg-[#003D60] hover:text-white focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
-                    <x-add-icon widht="16px" height="16px" color="currentColor"/>
-                    Novo Usuario
-                </button>
+                <a href="javascript:void(0)" @click="$dispatch('open-modal', 'create-user')">
+                    <button class="w-full sm:w-auto font-ubuntu justify-center inline-flex items-center gap-1 px-4 py-2 bg-transparent border border-[#003D60] rounded-md font-semibold text-xs text-[#003D60] uppercase tracking-widest hover:bg-[#003D60] hover:text-white focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
+                        <x-add-icon widht="16px" height="16px" color="currentColor"/>
+                        Novo Usuario
+                    </button>
+                </a>
 
+                <livewire:components.modals.users.create-user-modal/>
             </div>
 
             <h1 class="flex items-center justify-center gap-4 flex-col w-full text-[#003D60] text-lg text-[16px] font-ubuntu font-bold mb-3">

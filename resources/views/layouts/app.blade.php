@@ -15,7 +15,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased" x-data>
+<body class="font-sans antialiased" >
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.store('sidebar', {
@@ -27,7 +27,6 @@
         });
     </script>
     <div class="min-h-screen bg-gray-200" x-data="{ openSideMenu: true }">
-
         <livewire:layout.navigation />
 
         <main
@@ -39,5 +38,5 @@
             </div>
         </main>
     </div>
-</body>x
+</body>
 </html>
