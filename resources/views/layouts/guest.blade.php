@@ -16,12 +16,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen relative flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900
+        <div class="w-full min-h-screen relative flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900
                         bg-cover bg-fixed bg-center"
              style="background-image: url({{ asset('images/login/background-login.png') }});">
 
             <div class="relative w-full flex justify-center items-center">
-                <div class="absolute top-[38vw] sm:-top-[1.4vw] bg-white p-2 w-72 h-auto rounded-[10px] z-50  flex justify-center items-center shadow-lg">
+                <div class="absolute top-[38vw] sm:-top-[1.4vw] bg-white p-2 w-[350px] h-auto rounded-[10px] z-50  flex justify-center items-center shadow-[0px_4px_10px_5px_rgba(0,0,0,0.25)]">
                     <a href="/" wire:navigate>
                         <x-application-logo
                             width="120"
@@ -30,14 +30,15 @@
                     </a>
                 </div>
 
-                <div class="w-full mt-60 sm:mt-12 sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg z-10 pt-[22vw] sm:pt-[14vw] md:pt-[6vw]">
+                <div class="w-full mt-60 sm:mt-12 sm:w-[500px] px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg z-10 pt-[22vw] sm:pt-[14vw] md:pt-[6vw]">
                     <div class="-z-10">
                         {{ $slot }}
                     </div>
                 </div>
             </div>
 
-            <div class="absolute bottom-0 sm:right-0 sm:left-2/2 transform sm:translate-x-0 -translate-x-1/2 mb-4 sm:mr-8 sm:mb-8">
+
+            <div class="absolute bottom-0 right-5 sm:right-0 sm:left-2/2 transform sm:translate-x-0 -translate-x-1/2 mb-4 sm:mr-8 sm:mb-8">
                 <x-application-logo-geometrisa
                     width="200"
                     height="100"

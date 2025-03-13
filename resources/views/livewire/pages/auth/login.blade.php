@@ -2,53 +2,60 @@
     <form wire:submit="login" class="mr-14 ml-14">
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Email Address -->
-        <div class="relative">
+        @if(session()->has('error'))
+            <div class="bg-red-500 text-white p-3 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+        <div class="relative" x-data="{ placeholder: 'Digite o seu Email' }">
             <input
                 type="email"
                 id="email"
                 name="email"
                 wire:model="form.email"
                 required
-                autofocus
                 autocomplete="username"
-                class="block border-b-2 border-t-0 border-l-0 border-r-0 w-full mt-1 px-0 py-2 border-gray-400 text-center"
-                placeholder="Digite o seu Email"
+                class="font-ubuntu block border-b-2 border-t-0 border-l-0 border-r-0 w-full mt-1 px-0 py-2 border-gray-400 text-center focus:outline-none focus:ring-0 focus:border-gray-600"
+                x-bind:placeholder="placeholder"
+                @focus="placeholder = ''"
+                @blur="placeholder = 'Digite o seu E-mail'"
             />
-            <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
+            <x-input-error :messages="$errors->get('form.email')" class="mt-2 font-ubuntu" />
+
         </div>
 
         <!-- Password -->
-        <div class="mt-6">
-            <div class="relative">
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    wire:model="form.password"
-                    required
-                    autofocus
-                    autocomplete="none"
-                    class="block border-b-2 border-t-0 border-l-0 border-r-0 w-full mt-1 px-0 py-2 border-gray-400 text-center"
-                    placeholder="Digite a sua Senha"
-                />
-                <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
-            </div>
+        <div class="relative mt-6" x-data="{ placeholder: 'Digite a sua Senha' }">
+            <input
+                type="password"
+                id="password"
+                name="password"
+                wire:model="form.password"
+                required
+                autocomplete="none"
+                class="font-ubuntu block border-b-2 border-t-0 border-l-0 border-r-0 w-full mt-1 px-0 py-2 border-gray-400 text-center focus:outline-none focus:ring-0 focus:border-gray-600"
+                x-bind:placeholder="placeholder"
+                @focus="placeholder = ''"
+                @blur="placeholder = 'Digite a sua Senha'"
+            />
+            <x-input-error :messages="$errors->get('form.password')" class="mt-2 font-ubuntu" />
+
         </div>
 
         <!-- Remember Me -->
         <div class="block mt-6">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Esqueci minha senha?') }}
+                <a class="font-ubuntu text-sm text-[#003D60] hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                   href="{{ route('password.request') }}" wire:navigate>
+                    {{ __('Recuperar minha senha') }}
                 </a>
+
             @endif
         </div>
 
         <div class="w-full mt-6 mb-4 flex items-center">
-            <button type="submit" class="w-full flex items-center justify-center p-6 bg-[#003D60] rounded-[10px] uppercase font-bold text-white">
-                <span wire:loading.remove wire:target="login">
+            <button type="submit" class="w-full flex items-center justify-center p-6 hover:bg-[#003D60]/85 bg-[#003D60] rounded-[10px] uppercase font-bold text-white">
+                <span wire:loading.remove wire:target="login" class="font-ubuntu">
                     {{ __('Entrar') }}
                 </span>
                 <span wire:loading wire:target="login">

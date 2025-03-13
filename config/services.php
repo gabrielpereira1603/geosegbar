@@ -35,7 +35,7 @@ return [
         ],
     ],
     'spring_api' => [
-        'base_url' => env('SPRING_API_URL', 'http://localhost:8080/api'),
+        'base_url' => env('SPRING_API_URL', 'https://geometrisa-prod.com.br:9090'),
     ],
 
 ];

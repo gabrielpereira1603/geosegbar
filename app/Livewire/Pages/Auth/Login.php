@@ -42,16 +42,12 @@ class Login extends Component
                 session(['two_factor_email' => $this->form->email]);
                 return $this->redirect('/token-two-factor');
             }
-
-        } catch (ValidationException $e) {
-            throw $e;
-        } catch (\Exception $e) {
-            session()->flash('status', 'Erro ao autenticar: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            session()->flash('error', $e->getMessage());
         } finally {
             $this->is_loading = false;
         }
     }
-
     public function render()
     {
         return view('livewire.pages.auth.login')->layout('layouts.guest');
