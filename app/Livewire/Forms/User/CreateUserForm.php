@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Livewire\Forms\Users;
+namespace App\Livewire\Forms\User;
 
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class CreateUserForm extends Form

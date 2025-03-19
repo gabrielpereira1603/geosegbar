@@ -40,7 +40,7 @@
             </form>
         @elseif ($step === 2)
             <p class="mt-2 text-sm text-gray-600">
-                {{ __('Um código de verificação foi enviado para o seu email. Digite abaixo para confirmar a alteração.') }}
+                {{ __('Um código de verificação foi enviado para o seu e-mail. Digite abaixo para confirmar a alteração.') }}
             </p>
 
             <form>

@@ -52,7 +52,7 @@ new class extends Component
 
         <ul x-show="open" x-transition class=" overflow-y-auto">
             <li class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group">
-                <p class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
+                <p class="flex items-center justify-start gap-10 text-black font-light group-hover:text-white">
                     <x-dashboard-icon width="30px" height="30px" color="currentColor"/>
                     Dashboard
                 </p>
@@ -120,14 +120,14 @@ new class extends Component
             </li>
 
             <li class="p-2 px-4 cursor-pointer rounded-[10px] group mt-60 ml-4 mr-4 {{ request()->routeIs('users') ? ' bg-[#003D60] group-hover:text-white' : 'hover:bg-transparent' }}">
-                <p class="flex items-center justify-start gap-10 font-bold {{ request()->routeIs('users') ? 'group-hover:text-white' : 'group-hover:text-black' }} ">
+                <p class="flex items-center justify-start gap-10 {{ request()->routeIs('users') ? 'group-hover:text-white font-bold' : 'group-hover:text-black font-semibold' }} ">
                     <x-user-icon width="30px" height="30px" color="currentColor"/>
                     Usuários
                 </p>
             </li>
 
             <li class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group">
-                <p class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
+                <p class="flex items-center justify-start gap-10 text-black font-light group-hover:text-white">
                     <x-suport-icon width="30px" height="30px" color="currentColor"/>
                     Suporte
                 </p>
@@ -142,7 +142,7 @@ new class extends Component
         </ul>
 
         <ul x-show="!open" x-transition class="mt flex justify-between flex-col items-center text-black h-[50%] mt-[2vw]">
-            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px]">
                 <x-dashboard-icon width="30px" height="30px" color="currentColor"/>
             </li>
 
@@ -150,7 +150,7 @@ new class extends Component
                 <x-structure-icon width="30px" height="30px" color="currentColor"/>
             </li>
 
-            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] {{ request()->routeIs('users') ? ' bg-[#003D60] text-white' : 'hover:bg-transparent' }}">
                 <x-user-icon width="30px" height="30px" color="currentColor"/>
             </li>
 
@@ -158,7 +158,7 @@ new class extends Component
                 <x-suport-icon width="30px" height="30px" color="currentColor"/>
             </li>
 
-            <li class="p-2 bg-red-500 cursor-pointer rounded-[10px] group hover:text-white">
+            <li class="p-2 bg-red-500 cursor-pointer rounded-[10px] ">
                 <x-logout-icon width="30px" height="30px" color="currentColor"/>
             </li>
         </ul>

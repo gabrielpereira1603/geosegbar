@@ -38,18 +38,20 @@
         <div class="relative flex items-center flex-col gap-5 justify-center p-5 bg-gray-100 shadow-xl shadow-gray-400 rounded-[10px] overflow-auto">
             <div class="w-full sm-w-auto sm:absolute top-4 left-6 flex items-center">
                 <a href="javascript:void(0)" @click="$dispatch('open-modal', 'create-user')">
-                    <button class="w-full sm:w-auto font-ubuntu justify-center inline-flex items-center gap-1 px-4 py-2 bg-transparent border border-[#003D60] rounded-md font-semibold text-xs text-[#003D60] uppercase tracking-widest hover:bg-[#003D60] hover:text-white focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
-                        <x-add-icon widht="16px" height="16px" color="currentColor"/>
-                        Novo Usuario
+                    <button
+                        class="w-full sm:w-auto font-ubuntu justify-center inline-flex items-center gap-1 px-4 py-2 bg-transparent border border-[#003D60] rounded-md font-semibold text-xs text-[#003D60] uppercase tracking-widest hover:bg-[#003D60] hover:text-white focus:bg-[#003D60] focus:text-white focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150"
+                    >
+                        <x-add-icon width="16px" height="16px" color="currentColor" />
+                        Novo Usuário
                     </button>
                 </a>
 
                 <livewire:components.modals.users.create-user-modal/>
             </div>
 
-            <h1 class="flex items-center justify-center gap-4 flex-col w-full text-[#003D60] text-lg text-[16px] font-ubuntu font-bold mb-3">
+            <h1 class="flex items-center justify-center gap-4 flex-col w-full text-[#003D60] text-lg font-ubuntu font-bold mb-3">
                 Outros Usuários
-                <div class="sm:w-[400] w-[200px] h-[1.5px] bg-[#003D60]"></div>
+                <div class="w-[100%] sm:w-[400px] h-[1.5px] bg-[#003D60]"></div>
             </h1>
 
             <div class="overflow-x-auto w-full rounded-[10px]">
@@ -64,22 +66,41 @@
 
                     </thead>
                     <tbody>
-                    <tr class="shadow-xl shadow-gray-300/50 rounded-[10px] bg-white">
-                        <td class="text-center p-6 rounded-l-[10px] text-lg text-gray-950 font-light font-sans">Maria Helena Pereira da Silva</td>
-                        <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">maria.helena@email.com</td>
-                        <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">(11) 99999-9999</td>
-                        <td class="p-6 rounded-r-[10px] text-lg text-gray-950 font-light font-sans">
-                            <ul class="flex items-center justify-center gap-5">
-                                <li><x-user-edit-icon width="20px" height="20px" color="#003D60"/></li>
-                                <li><x-cancel-icon width="20px" height="20px" color="red"/></li>
-                                <li><x-trash-icon width="20px" height="20px" color="red"/></li>
-                            </ul>
-                        </td>
-                    </tr>
+                        @foreach ($users as $user)
+                            <tr class="shadow-xl shadow-gray-300/50 rounded-[10px] bg-white">
+                                <td class="text-center p-6 rounded-l-[10px] text-lg text-gray-950 font-light font-sans">{{ $user['name'] }}</td>
+                                <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">{{ $user['email'] }}</td>
+                                <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">{{ $user['phone'] }}</td>
+                                <td class="p-6 rounded-r-[10px] text-lg text-gray-950 font-light font-sans">
+                                    <ul class="flex items-center justify-center gap-5">
+                                        <li>
+                                                <a href="javascript:void(0)" wire:click="$dispatch('update-user', { id: {{ $user['id'] }} }); ">
+                                                <x-user-edit-icon width="20px" height="20px" color="#003D60"/>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)"
+                                               @click="$dispatch('open-modal', 'disable-user-modal')">
+                                                <x-cancel-icon width="20px" height="20px" color="red"/>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="javascript:void(0)"
+                                               @click="$dispatch('open-modal', 'delete-user-modal')">
+                                            <x-trash-icon width="20px" height="20px" color="red"/>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <livewire:components.modals.users.disable-user-modal :user="$user"/>
+                            <livewire:components.modals.users.delete-user-modal :user="$user"/>
+                        @endforeach
+                        <livewire:components.modals.users.edit-user-modal/>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
 <div>
     <form wire:submit="login" class="mr-14 ml-14">
         <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+        <x-auth-session-status class="mb-4 flex items-center justify-center" :status="session('status')" />
         @if(session()->has('error'))
-            <div class="bg-red-500 text-white p-3 rounded">
+            <div class="flex items-center justify-center bg-red-500 text-white p-3 rounded">
                 {{ session('error') }}
             </div>
         @endif
@@ -44,9 +44,9 @@
 
         <!-- Remember Me -->
         <div class="block mt-6">
-            @if (Route::has('password.request'))
+            @if (Route::has('forgot-password'))
                 <a class="font-ubuntu text-sm text-[#003D60] hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                   href="{{ route('password.request') }}" wire:navigate>
+                   href="{{ route('forgot-password') }}" wire:navigate>
                     {{ __('Recuperar minha senha') }}
                 </a>
 

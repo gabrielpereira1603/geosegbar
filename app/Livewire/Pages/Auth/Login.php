@@ -17,10 +17,8 @@ class Login extends Component
 
     public function __construct()
     {
-
         $this->auth_service = new AuthService('user');
     }
-
 
     public function login()
     {
