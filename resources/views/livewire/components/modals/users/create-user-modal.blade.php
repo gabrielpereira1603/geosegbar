@@ -1,4 +1,4 @@
-<x-modal name="create-user">
+<x-modal name="create-user-modal">
     <div class="p-6 shadow-xl shadow-gray-400 rounded-[10px]">
         <h2 class="flex items-center text-lg font-bold text-[#003D60] gap-2">
             <x-user-add-icon widht="20px" height="20px" color="currentColor"/>
@@ -8,7 +8,7 @@
         <div class="w-[100%] h-[1.5px] bg-[#003D60] mt-2"></div>
 
 
-        <form wire:submit.prevent="createUser" class="bg-white">
+        <form wire:submit.prevent="create" class="bg-white">
             @csrf
 
             @error('form.name')
@@ -38,6 +38,11 @@
             </div>
 
             <div class="mt-4 flex flex-col gap-2">
+                <label for="phone" class="text-gray-700 text-sm font-medium">Telefone <span class="text-red-500">*</span></label>
+                <input type="text" id="email" wire:model.defer="form.phone" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" placeholder="Telefone do usuário" required>
+            </div>
+
+            <div class="mt-4 flex flex-col gap-2">
                 <label for="password" class="text-gray-700 text-sm font-medium">Senha <span class="text-red-500">*</span></label>
                 <input type="password" id="password" wire:model.defer="form.password" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" placeholder="Senha do usuário" required>
             </div>
@@ -50,6 +55,15 @@
                     <option value="3">Outro</option>
                 </select>
             </div>
+
+            <div class="mt-4 flex flex-col gap-2">
+                <label for="status" class="text-gray-700 text-sm font-medium">Status <span class="text-red-500">*</span></label>
+                <select id="status" wire:model.defer="form.status" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
+                    <option value="1">Ativado</option>
+                    <option value="2">Desativado</option>
+                </select>
+            </div>
+
 
             <div class="mt-6 flex justify-end gap-4">
                 <button type="button" @click="$dispatch('close-modal', 'create-user')" class="px-4 py-2 bg-gray-300 rounded-md text-gray-800 font-semibold hover:bg-gray-400 transition">

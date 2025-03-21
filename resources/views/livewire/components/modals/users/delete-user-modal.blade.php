@@ -1,4 +1,4 @@
-<div class="opacity-90">
+<div class="z-50">
     <x-modal name="delete-user-modal">
         <div class="p-6 shadow-xl shadow-gray-400 rounded-[10px] bg-white">
         <h2 class="flex items-center text-lg font-bold text-[#003D60] gap-2">

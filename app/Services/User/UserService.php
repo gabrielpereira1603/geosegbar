@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -76,7 +77,8 @@ class UserService
 
         return $response->json();
     }
-    public function deleteUser(int $userId)
+
+    public function createUser($payload)
     {
         $token = Session::get('token');
 
@@ -87,8 +89,7 @@ class UserService
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json',
-        ])->delete("{$this->apiUrl}/$userId");
-
+        ])->post($this->apiUrl . '/register' , $payload);
         if (!$response->successful()) {
             return $this->handleError($response);
         }
@@ -96,7 +97,41 @@ class UserService
         return $response->json();
     }
 
+    public function deleteUser($user_id)
+    {
+        $token = Session::get('token');
+        if (!$token) {
+            throw new HttpException(401, 'Token de autenticação não encontrado');
+        }
 
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json',
+        ])->delete("{$this->apiUrl}/$user_id");
+        if (!$response->successful()) {
+            return $this->handleError($response);
+        }
+
+        return $response->json();
+    }
+
+    public function changePassword($user_id, $payload){
+        $token = Session::get('token');
+
+        if (!$token) {
+            throw new HttpException(401, 'Token de autenticação não encontrado');
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json',
+        ])->put($this->apiUrl . '/' . $user_id . '/password', $payload);
+        if (!$response->successful()) {
+            return $this->handleError($response);
+        }
+
+        return $response->json();
+    }
 
     private function handleError($response)
     {

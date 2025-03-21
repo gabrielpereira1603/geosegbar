@@ -3,23 +3,47 @@
 namespace App\Livewire\Components\Modals\Users;
 
 use App\Services\User\UserService;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class DeleteUserModal extends Component
 {
-    protected UserService $userService;
+    public bool $is_loading = false;
+    private UserService $user_service;
 
-    public function mount($user)
+    public $user;
+    public $user_id;
+
+    public function __construct()
     {
-        $this->userService = new UserService('user');
+        $this->user_service = new UserService('user');
+    }
+
+    #[On('delete-user')]
+    public function deleteUserModalOpen($id): void
+    {
+        $this->user_id = $id;
+
+        $this->dispatch('open-modal', 'delete-user-modal');
     }
 
     public function deleteUser()
     {
-        if ($this->userId) {
-            dd($this->userId);
+        $response = $this->user_service->deleteUser($this->user_id);
+
+        if (!$response['success']) {
+            session()->flash('error', $response['message']);
+            $this->dispatch('open-modal', 'delete-user-modal');
+            $this->dispatch('user-error', title: $response['message']);
+
+            return;
         }
+
+        session()->flash('success', 'Usuário atualizado com sucesso!');
+        $this->dispatch('close-modal', 'delete-user-modal');
+        $this->dispatch('user-success', title: $response['message']);
     }
+
     public function render()
     {
         return view('livewire.components.modals.users.delete-user-modal');

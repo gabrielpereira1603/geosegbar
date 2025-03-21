@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\Users;
 use App\Livewire\Forms\Auth\LoginForm;
 use App\Services\Auth\AuthService;
 use App\Services\User\UserService;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class HomeUsers extends Component
@@ -14,6 +15,7 @@ class HomeUsers extends Component
 
     public array $users = [];
 
+    #[On('load-users')]
     public function mount()
     {
         $this->user_service = new UserService('user');

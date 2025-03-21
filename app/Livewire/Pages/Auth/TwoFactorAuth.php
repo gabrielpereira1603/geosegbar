@@ -43,13 +43,11 @@ class TwoFactorAuth extends Component
             ];
 
             $authResponse = $this->auth_service->tokenVerify($credentials);
-
             if (isset($authResponse['success']) && $authResponse['success'] === true) {
-                $user = User::fromApiResponse($authResponse['data']);
-
+                $user = $authResponse['data'];
                 session([
                     'user' => $user,
-                    'token' => $user->token
+                    'token' => $user['token']
                 ]);
 
                 return redirect()->route('users');

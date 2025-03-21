@@ -2,16 +2,13 @@
 
 namespace App\Livewire\Forms\User;
 
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class EditPhoneUserForm extends Form
+class EditEmailUserForm extends Form
 {
-    #[Validate('required|max:16')]
-    public $phone;
+    #[Validate('required')]
+    public $email;
 
     public array $user = [];
-
-
 }

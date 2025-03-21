@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Components\Modals\Users;
 
+use App\Livewire\Forms\User\EditEmailUserForm;
 use App\Livewire\Forms\User\EditPhoneUserForm;
 use App\Services\User\UserService;
 use Livewire\Component;
 
-class EditPhoneUserModal extends Component
+class EditEmailUserModal extends Component
 {
-    public EditPhoneUserForm $form;
+    public EditEmailUserForm $form;
 
     private UserService $user_service;
 
@@ -25,7 +26,7 @@ class EditPhoneUserModal extends Component
     {
         $user = session('user');
         $this->form->user = $user;
-        $this->form->phone = $user['phone'] ?? '';
+        $this->form->email = $this->form->user['email'];
     }
 
     public function startEditing(): void
@@ -36,7 +37,7 @@ class EditPhoneUserModal extends Component
     public function cancelEditing(): void
     {
         $user = session('user');
-        $this->form->phone = $this->form->user['phone'];
+        $this->form->email = $this->form->user['email'];
         $this->isEditing = false;
     }
 
@@ -46,8 +47,8 @@ class EditPhoneUserModal extends Component
 
         $payload = [
             'name' => $this->form->user['name'],
-            'phone' => $this->form->phone,
-            'email' => $this->form->user['email'],
+            'phone' => $this->form->user['phone'],
+            'email' => $this->form->email,
             'sex' => [
                 'id' => $this->form->user['sex']['id']
             ],
@@ -58,21 +59,19 @@ class EditPhoneUserModal extends Component
 
         $response = $this->user_service->updateUser($payload, $this->form->user['id']);
         if (!$response['success']) {
-            session()->flash('error', $response['message']);
-            $this->dispatch('open-modal', 'edit-phone-user');
+            $this->dispatch('open-modal', 'edit-email-user');
             $this->dispatch('user-error', title: $response['message']);
-            $this->form->phone = $response['data']['phone'];
+            $this->form->email = $response['data']['email'];
             return;
         }
 
-        session()->flash('success', 'Usuário atualizado com sucesso!');
-        $this->dispatch('close-modal', 'edit-phone-user');
-        $this->isEditing = false;
-        $this->dispatch('user-success', title: 'Telefone do ' . $response['message']);
+        $this->dispatch('close-modal', 'edit-email-user');
+
+        $this->dispatch('user-success', title: 'Email do ' . $response['message']);
     }
 
     public function render()
     {
-        return view('livewire.components.modals.users.edit-phone-user-modal');
+        return view('livewire.components.modals.users.edit-email-user-modal');
     }
 }

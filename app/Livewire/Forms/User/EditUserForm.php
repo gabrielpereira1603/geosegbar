@@ -18,12 +18,24 @@ class EditUserForm extends Form
     #[Validate('required|string')]
     public string $phone = '';
 
+    #[Validate('required|string')]
+    public string $status = '';
+
     public function getSexLabel()
     {
         return match ($this->sex) {
             '1' => 'Masculino',
             '2' => 'Feminino',
             '3' => 'Outro',
+            default => 'Não informado',
+        };
+    }
+
+    public function getStatusLabel()
+    {
+        return match ($this->status) {
+            '1' => 'Ativo',
+            '2' => 'Inativo',
             default => 'Não informado',
         };
     }

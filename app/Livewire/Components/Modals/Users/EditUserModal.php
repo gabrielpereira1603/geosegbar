@@ -23,14 +23,8 @@ use Livewire\Attributes\On;
         $this->user_service = new UserService('user');
     }
 
-
-    public function mount()
-    {
-
-    }
-
     #[On('update-user')]
-    public function updatePostList($id): void
+    public function updateUserModalOpen($id): void
     {
         $this->user_service = new UserService('user');
 
@@ -43,7 +37,7 @@ use Livewire\Attributes\On;
             $this->form->name = $this->user['name'];
             $this->form->phone = $this->user['phone'];
             $this->form->sex = (string) $this->user['sex']['id'];
-
+            $this->form->status = (string) $this->user['status']['id'];
         }
 
         $this->dispatch('open-modal', 'edit-user-modal');
@@ -57,19 +51,27 @@ use Livewire\Attributes\On;
             'email' => $this->form->email,
             'name' => $this->form->name,
             'phone' => $this->form->phone,
-            'sex' => $this->form->sex,
+            'sex' => [
+                'id'  => $this->form->sex,
+            ],
+            'status' => [
+                'id'=> $this->form->status
+            ],
         ];
 
         $response = $this->user_service->updateUser($payload, $this->user_id);
 
         if (!$response['success']) {
             session()->flash('error', $response['message']);
-            $this->dispatch('open-modal', 'edit-user-modal'); // Mantém o modal aberto
+            $this->dispatch('open-modal', 'edit-user-modal');
+            $this->dispatch('user-error', title: $response['message']);
+
             return;
         }
 
         session()->flash('success', 'Usuário atualizado com sucesso!');
         $this->dispatch('close-modal', 'edit-user-modal');
+        $this->dispatch('user-success', title: $response['message']);
     }
 
 
