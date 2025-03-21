@@ -59,15 +59,19 @@ new class extends Component
             </li>
 
             <li
-                class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group relative"
+                class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group relative
+                {{ request()->routeIs('structures') ? ' bg-[#003D60] group-hover:text-white' : 'text-black' }}"
                 x-data="{ open: true, estruturas: ['Barragem 1', 'Barragem 2', 'Barragem 3', 'Barragem 4', 'Barragem 5'] }"
             >
-                <p
-                    class="flex items-center justify-start gap-10 text-black font-light group-hover:text-white cursor-pointer"
-                >
-                    <x-structure-icon width="30px" height="30px" color="currentColor"/>
-                    Estruturas
-                </p>
+                <a href="{{ route('structures') }}">
+                    <p
+                        class="flex items-center justify-start gap-10 font-light group-hover:text-white cursor-pointer
+                        {{ request()->routeIs('users') ? 'group-hover:text-white font-bold' : 'group-hover:text-white font-semibold' }} "
+                    >
+                        <x-structure-icon width="30px" height="30px" color="currentColor"/>
+                        Estruturas
+                    </p>
+                </a>
 
                 <!-- Campo de Input e Lista de Estruturas -->
                 <div
@@ -119,11 +123,17 @@ new class extends Component
                 </div>
             </li>
 
-            <li class="p-2 px-4 cursor-pointer rounded-[10px] group mt-60 ml-4 mr-4 {{ request()->routeIs('users') ? ' bg-[#003D60] group-hover:text-white' : 'hover:bg-transparent' }}">
-                <p class="flex items-center justify-start gap-10 {{ request()->routeIs('users') ? 'group-hover:text-white font-bold' : 'group-hover:text-black font-semibold' }} ">
-                    <x-user-icon width="30px" height="30px" color="currentColor"/>
-                    Usuários
-                </p>
+            <li class="p-2 px-4 cursor-pointer rounded-[10px] group mt-60 ml-4 mr-4 hover:bg-[#003D60]
+                {{ request()->routeIs('users') ? ' bg-[#003D60] group-hover:text-white' : 'text-black' }}"
+            >
+                <a href="{{ route('users') }}">
+                    <p class="flex items-center justify-start gap-10 font-light group-hover:text-white
+                        {{ request()->routeIs('users') ? 'group-hover:text-white font-bold' : 'group-hover:text-white font-semibold' }} "
+                    >
+                        <x-user-icon width="30px" height="30px" color="currentColor"/>
+                        Usuários
+                    </p>
+                </a>
             </li>
 
             <li class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group">

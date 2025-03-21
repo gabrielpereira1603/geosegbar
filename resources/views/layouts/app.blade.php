@@ -30,10 +30,19 @@
     <div class="min-h-screen bg-gray-200" x-data="{ openSideMenu: true }">
         <livewire:layout.navigation />
 
+        @if (isset($header))
+            <header class="bg-white dark:bg-gray-800 shadow"
+                    :class="$store.sidebar.openSideMenu ? 'ml-20 sm:ml-64' : 'ml-20 sm:ml-14'">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+        @endif
         <main
             class="transition-all duration-300 ease-in-out flex-1 p-4"
             :class="$store.sidebar.openSideMenu ? 'ml-20 sm:ml-64' : 'ml-20 sm:ml-14'"
         >
+
             <div class="m-2">
                 {{ $slot }}
             </div>
