@@ -133,6 +133,41 @@ class UserService
         return $response->json();
     }
 
+    public function forgotPassword($payload){
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+        ])->post($this->apiUrl . '/forgot-password', $payload);
+        if (!$response->successful()) {
+            return $this->handleError($response);
+        }
+
+        return $response->json();
+    }
+
+    public function verifyResetCode($payload)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+        ])->post($this->apiUrl . '/verify-reset-code', $payload);
+        if (!$response->successful()) {
+            return $this->handleError($response);
+        }
+
+        return $response->json();
+    }
+
+    public function resetPassword($payload){
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+        ])->post($this->apiUrl . '/reset-password', $payload);
+        if (!$response->successful()) {
+            return $this->handleError($response);
+        }
+
+        return $response->json();
+    }
+
+
     private function handleError($response)
     {
         $statusCode = $response->status();

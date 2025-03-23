@@ -56,6 +56,7 @@ class ChangePasswordUserModal extends Component
         ];
 
         $response = $this->user_service->changePassword($this->form->user['id'],$payload,);
+
         if (!$response['success']) {
             session()->flash('error', $response['message']);
             $this->dispatch('open-modal', 'change-password-user');
