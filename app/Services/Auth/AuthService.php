@@ -23,11 +23,11 @@ class AuthService
         try {
             $response = Http::post("{$this->apiUrl}/login/initiate", $credentials);
 
-            if ($response->successful()) {
-                return $response->json();
+            if (!$response->successful()) {
+                return $this->handleError($response);
             }
 
-            $this->handleError($response);
+            return $response->json();
         } catch (\Throwable $e) {
             Log::error('Erro inesperado na autenticação', ['exception' => $e]);
             throw new AuthenticationException('Ocorreu um erro inesperado ao autenticar.', [], 500);
@@ -50,18 +50,70 @@ class AuthService
         }
     }
 
+    public function forgotPassword(array $payload)
+    {
+        try {
+            $response = Http::post("{$this->apiUrl}/forgot-password", $payload);
+
+            if (!$response->successful()) {
+                return $this->handleError($response);
+            }
+
+            return $response->json();
+        } catch (\Throwable $e) {
+            Log::error('Erro inesperado na autenticação', ['exception' => $e]);
+            throw new AuthenticationException('Ocorreu um erro inesperado ao autenticar.', [], 500);
+        }
+    }
+
+    public function verifyResetCode(array $payload)
+    {
+        try {
+            $response = Http::post("{$this->apiUrl}/verify-reset-code", $payload);
+
+            if (!$response->successful()) {
+                return $this->handleError($response);
+            }
+
+            return $response->json();
+        } catch (\Throwable $e) {
+            Log::error('Erro inesperado na autenticação', ['exception' => $e]);
+            throw new AuthenticationException('Ocorreu um erro inesperado ao autenticar.', [], 500);
+        }
+    }
+
+    public function resetPassword(array $payload)
+    {
+        try {
+            $response = Http::post("{$this->apiUrl}/reset-password", $payload);
+
+            if (!$response->successful()) {
+                return $this->handleError($response);
+            }
+
+            return $response->json();
+        } catch (\Throwable $e) {
+            Log::error('Erro inesperado na autenticação', ['exception' => $e]);
+            throw new AuthenticationException('Ocorreu um erro inesperado ao autenticar.', [], 500);
+        }
+    }
+
     private function handleError($response)
     {
         $statusCode = $response->status();
         $body = $response->json();
         $message = $body['message'] ?? 'Erro desconhecido';
 
-        Log::error('Erro na API de autenticação', [
+        Log::error('Erro na API de Autenticação', [
             'status' => $statusCode,
             'response' => $body
         ]);
 
-        throw new HttpException($statusCode, $message);
+        return [
+            'success' => false,
+            'message' => $message,
+            'status' => $statusCode,
+        ];
     }
 
 }

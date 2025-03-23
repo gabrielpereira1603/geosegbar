@@ -1,21 +1,3 @@
-<?php
-
-use App\Livewire\Actions\Logout;
-use Livewire\Volt\Component;
-
-new class extends Component
-{
-    /**
-     * Log the current user out of the application.
-     */
-    public function logout(Logout $logout): void
-    {
-        $logout();
-
-        $this->redirect('/', navigate: true);
-    }
-}; ?>
-
 <div x-data="{ open: true }" class="flex">
     <div
         class="overflow-y-auto bg-white text-white fixed h-full top-0 left-0 w-72 transition-all duration-300 ease-in-out transform z-50 shadow-gray-700 shadow-lg"
@@ -144,11 +126,13 @@ new class extends Component
             </li>
 
             <li class="p-2 m-4 px-4 hover:bg-red-500 cursor-pointer rounded-[10px] group">
-                <p class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
+
+                <a href="{{ route('logout') }}" class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
                     <x-logout-icon width="30px" height="30px" color="currentColor"/>
                     Sair
-                </p>
+                </a>
             </li>
+
         </ul>
 
         <ul x-show="!open" x-transition class="mt flex justify-between flex-col items-center text-black h-[50%] mt-[2vw]">
@@ -169,7 +153,9 @@ new class extends Component
             </li>
 
             <li class="p-2 bg-red-500 cursor-pointer rounded-[10px] ">
-                <x-logout-icon width="30px" height="30px" color="currentColor"/>
+                <a href="">
+                    <x-logout-icon width="30px" height="30px" color="currentColor"/>
+                </a>
             </li>
         </ul>
 

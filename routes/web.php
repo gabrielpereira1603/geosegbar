@@ -11,6 +11,9 @@ Route::get('/', function () {
 Route::get('home', Home::class)
     ->name('home');
 
+Route::get('logout', [\App\Http\Controllers\ProfileController::class, 'logout'])
+    ->name('logout');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
