@@ -126,12 +126,31 @@
             </li>
 
             <li class="p-2 m-4 px-4 hover:bg-red-500 cursor-pointer rounded-[10px] group">
-
-                <a href="{{ route('logout') }}" class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
+                <button wire:click="$dispatch('confirm-logout')" class="flex items-center justify-start gap-10 text-black font-bold group-hover:text-white">
                     <x-logout-icon width="30px" height="30px" color="currentColor"/>
                     Sair
-                </a>
+                </button>
             </li>
+
+            @script
+            <script>
+                $wire.on('confirm-logout', (event) => {
+                    Swal.fire({
+                        title: 'Você tem certeza?',
+                        text: 'Deseja realmente sair?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sim, sair',
+                        cancelButtonText: 'Cancelar',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $wire.dispatch('logout-event');
+                        }
+                    });
+                });
+            </script>
+            @endscript
 
         </ul>
 

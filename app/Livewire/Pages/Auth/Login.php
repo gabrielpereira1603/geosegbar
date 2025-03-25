@@ -35,13 +35,15 @@ class Login extends Component
             $authResponse = $this->auth_service->login($credentials);
 
             if (isset($authResponse['success']) && $authResponse['success'] === true) {
-                session()->flash('status', $authResponse['message']);
+                session(['auth_message' => $authResponse['message']]);
                 session(['two_factor_start' => Carbon::now()]);
                 session(['two_factor_email' => $this->form->email]);
                 return $this->redirect('/token-two-factor');
             }
+
+            $this->dispatch('user-error', title: $authResponse['message']);
         } catch (\Throwable $e) {
-            session()->flash('error', $e->getMessage());
+            $this->dispatch('user-error', title: $e->getMessage());
         } finally {
             $this->is_loading = false;
         }

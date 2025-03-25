@@ -66,7 +66,7 @@
 
 
             <div class="mt-6 flex justify-end gap-4">
-                <button type="button" @click="$dispatch('close-modal', 'create-user')" class="px-4 py-2 bg-gray-300 rounded-md text-gray-800 font-semibold hover:bg-gray-400 transition">
+                <button type="button" @click="$dispatch('close-modal', 'create-user-modal')" class="px-4 py-2 bg-gray-300 rounded-md text-gray-800 font-semibold hover:bg-gray-400 transition">
                     Cancelar
                 </button>
                 <button type="submit" class="flex items-center justify-center gap-2 px-4 py-2 bg-[#003D60] text-white rounded-md font-semibold hover:bg-gray-900 transition">

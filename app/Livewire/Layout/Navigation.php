@@ -2,16 +2,19 @@
 
 namespace App\Livewire\Layout;
 
+use App\Http\Controllers\ProfileController;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Navigation extends Component
 {
+
+    #[On('logout-event')]
     public function logout()
     {
-        // Limpa a sessão do usuário
         session()->forget(['user', 'token']);
+        $this->dispatch('user-error', title: 'Você foi desconectado!');
 
-        // Redireciona para a página de login
         return redirect()->route('login');
     }
 

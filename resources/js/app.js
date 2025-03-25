@@ -1,13 +1,14 @@
 import './bootstrap';
 
+// Adiciona Alpine ao escopo global
 import Alpine from 'alpinejs';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
-// Adiciona Alpine ao escopo global
-window.Alpine = Alpine;
+window.a = a;
+
 Alpine.start();
 
 window.L = L;

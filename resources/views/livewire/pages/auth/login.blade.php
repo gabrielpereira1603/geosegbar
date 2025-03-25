@@ -70,4 +70,34 @@
             </button>
         </div>
     </form>
+
+    @script
+    <script>
+        $wire.on('user-success', (event) => {
+            console.log(event)
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: event.title,
+                confirmButtonText: 'Ok'
+            });
+            $wire.dispatch('load-users');
+        });
+
+        $wire.on('user-error', (event) => {
+            console.log(event)
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: event.title,
+                confirmButtonText: 'Ok'
+            });
+            $wire.dispatch('load-users');
+        });
+
+        $wire.on('load-table-users', () => {
+            $wire.dispatch('load-users');
+        });
+    </script>
+    @endscript
 </div>

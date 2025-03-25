@@ -69,7 +69,6 @@ use Livewire\Attributes\On;
             return;
         }
 
-        session()->flash('success', 'Usuário atualizado com sucesso!');
         $this->dispatch('close-modal', 'edit-user-modal');
         $this->dispatch('user-success', title: $response['message']);
     }

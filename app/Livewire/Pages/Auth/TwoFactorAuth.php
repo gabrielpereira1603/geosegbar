@@ -24,9 +24,17 @@ class TwoFactorAuth extends Component
 
     public function mount()
     {
+        $authMessage = session('auth_message');
+
+        if ($authMessage) {
+            $this->dispatch('user-success', title: $authMessage);
+        }
+
         $this->form->email = session('two_factor_email');
         if (!$this->form->email) {
-            return redirect()->route('login')->with('status', 'Sessão expirada, faça login novamente!');
+            $this->dispatch('user-error', title: 'Sessão expirada, faça login novamente!');
+
+            return redirect()->route('login');
         }
     }
 
@@ -43,6 +51,7 @@ class TwoFactorAuth extends Component
             ];
 
             $authResponse = $this->auth_service->tokenVerify($credentials);
+
             if (isset($authResponse['success']) && $authResponse['success'] === true) {
                 $user = $authResponse['data'];
                 session([
@@ -50,12 +59,19 @@ class TwoFactorAuth extends Component
                     'token' => $user['token']
                 ]);
 
+                session()->forget('two_factor_email');
+                session()->forget('auth_message');
+                session()->forget('two_factor_start');
+
+                $this->dispatch('user-success', title: $authResponse['message']);
                 return redirect()->route('users');
             }
+            $this->dispatch('user-error', title: $authResponse['message']);
+
         } catch (ValidationException $e) {
             throw $e;
         } catch (\Exception $e) {
-            session()->flash('status', 'Erro ao autenticar: ' . $e->getMessage());
+            $this->dispatch('user-error', title:  $e->getMessage());
         } finally {
             $this->is_loading = false;
         }
