@@ -11,7 +11,7 @@
                 <div class="w-[100%] sm:w-[400px] h-[1.5px] bg-[#003D60]"></div>
             </h1>
 
-            <ul class="flex gap-6 flex-col sm:flex-row sm:items-center">
+            <ul class="flex gap-6 flex-col sm:flex-row sm:items-center sm:justify-center items-center">
                 <li>
                     <a href="javascript:void(0)" @click="$dispatch('open-modal', 'edit-phone-user')">
                         <button class="font-ubuntu inline-flex items-center gap-1 px-4 py-2 bg-[#003D60] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900  focus:bg-[#003D60] focus:outline-none focus:ring-2 focus:ring-[#003D60] focus:ring-offset-2 transition ease-in-out duration-150">
@@ -41,7 +41,6 @@
                     </a>
                 </li>
                 <livewire:components.modals.users.edit-email-user-modal/>
-
             </ul>
         </div>
         @script
@@ -68,13 +67,14 @@
                 <div class="w-[100%] sm:w-[400px] h-[1.5px] bg-[#003D60]"></div>
             </h1>
 
-            <div class="overflow-x-auto w-full rounded-[10px]">
+            <div class="overflow-x-auto overflow-y-auto w-full max-h-[300px] rounded-[10px]">
                 <table class="sm:max-h-[400px] w-full border-separate border-spacing-y-6 min-w-[600px]">
                     <thead>
                     <tr class="text-lg text-[#003D60] font-bold font-ubuntu">
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Nome</th>
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Email</th>
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Telefone</th>
+                        <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Status</th>
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Ações</th>
                     </tr>
 
@@ -85,34 +85,61 @@
                                 <td class="text-center p-6 rounded-l-[10px] text-lg text-gray-950 font-light font-sans">{{ $user['name'] }}</td>
                                 <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">{{ $user['email'] }}</td>
                                 <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">{{ $user['phone'] }}</td>
+                                <td class="text-center p-6">
+                                    @if($user['status']['id'] === 1)
+                                        <x-check-circle-icon width="24px" height="24px" color="green" class="inline-block"/>
+                                    @else
+                                        <x-cross-circle-icon width="24px" height="24px" color="red" class="inline-block"/>
+                                    @endif
+                                </td>
+
                                 <td class="p-6 rounded-r-[10px] text-lg text-gray-950 font-light font-sans">
                                     <ul class="flex items-center justify-center gap-5">
-                                        <li>
-                                                <a href="javascript:void(0)"
-                                                   wire:click="$dispatch('update-user', { id: {{ $user['id'] }} }); ">
+                                        <li x-data="{ tooltip: false }" class="relative">
+                                            <a href="{{ route('users.edit', $user['id']) }}"
+                                               @mouseenter="tooltip = true" @mouseleave="tooltip = false">
                                                 <x-user-edit-icon width="20px" height="20px" color="#003D60"/>
                                             </a>
+                                            <span x-show="tooltip" class="absolute top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded p-1">
+                                                Editar Usuário
+                                            </span>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)"
-                                               wire:click="$dispatch('disable-user', { id: {{ $user['id'] }} }); ">
-                                                <x-cancel-icon width="20px" height="20px" color="red"/>
-                                            </a>
+                                        <li x-data="{ tooltip: false }" class="relative">
+                                            @if($user['status']['id'] === 1)
+                                                <a href="javascript:void(0)"
+                                                   wire:click="$dispatch('disable-user', { id: {{ $user['id'] }} });"
+                                                   @mouseenter="tooltip = true" @mouseleave="tooltip = false">
+                                                    <x-cancel-icon width="20px" height="20px" color="red"/>
+                                                </a>
+                                                <span x-show="tooltip" class="absolute top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded p-1">
+                                                    Desativar Usuário
+                                                </span>
+                                            @else
+                                                <a href="javascript:void(0)" @mouseenter="tooltip = true" @mouseleave="tooltip = false">
+                                                    <x-active-user-icon width="20px" height="20px" color="green"/>
+                                                </a>
+                                                <span x-show="tooltip" class="absolute top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded p-1">
+                                                    Ativar Usuário
+                                                </span>
+                                            @endif
                                         </li>
-
-                                        <li>
+                                        <li x-data="{ tooltip: false }" class="relative">
                                             <a href="javascript:void(0)"
-                                               wire:click="$dispatch('delete-user', { id: {{ $user['id'] }} }); ">
-                                            <x-trash-icon width="20px" height="20px" color="red"/>
+                                               wire:click="$dispatch('delete-user', { id: {{ $user['id'] }} });"
+                                               @mouseenter="tooltip = true" @mouseleave="tooltip = false">
+                                                <x-trash-icon width="20px" height="20px" color="red"/>
                                             </a>
+                                            <span x-show="tooltip" class="absolute top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded p-1">
+                                                Excluir Usuário
+                                            </span>
                                         </li>
                                     </ul>
+
                                 </td>
                             </tr>
                         @endforeach
                         <livewire:components.modals.users.disable-user-modal/>
                         <livewire:components.modals.users.delete-user-modal/>
-                        <livewire:components.modals.users.edit-user-modal/>
                     </tbody>
                 </table>
             </div>

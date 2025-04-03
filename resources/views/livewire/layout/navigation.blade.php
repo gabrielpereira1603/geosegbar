@@ -106,17 +106,18 @@
             </li>
 
             <li class="p-2 px-4 cursor-pointer rounded-[10px] group mt-60 ml-4 mr-4 hover:bg-[#003D60]
-                {{ request()->routeIs('users') ? ' bg-[#003D60] group-hover:text-white' : 'text-black' }}"
+                {{ request()->routeIs('users*') ? ' bg-[#003D60] group-hover:text-white' : 'text-black' }}"
             >
                 <a href="{{ route('users') }}">
                     <p class="flex items-center justify-start gap-10 font-light group-hover:text-white
-                        {{ request()->routeIs('users') ? 'group-hover:text-white font-bold' : 'group-hover:text-white font-semibold' }} "
+            {{ request()->routeIs('users*') ? 'group-hover:text-white font-bold' : 'group-hover:text-white font-semibold' }} "
                     >
                         <x-user-icon width="30px" height="30px" color="currentColor"/>
                         Usuários
                     </p>
                 </a>
             </li>
+
 
             <li class="p-2 m-4 px-4 hover:bg-[#003D60] cursor-pointer rounded-[10px] group">
                 <p class="flex items-center justify-start gap-10 text-black font-light group-hover:text-white">
@@ -159,22 +160,29 @@
                 <x-dashboard-icon width="30px" height="30px" color="currentColor"/>
             </li>
 
-            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
-                <x-structure-icon width="30px" height="30px" color="currentColor"/>
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px]
+            {{ request()->routeIs('structures*') ? ' bg-[#003D60] text-white' : 'hover:bg-transparent' }}">
+                <a href="{{ route('structures') }}" >
+                    <x-structure-icon width="30px" height="30px" color="currentColor"/>
+                </a>
             </li>
 
-            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] {{ request()->routeIs('users') ? ' bg-[#003D60] text-white' : 'hover:bg-transparent' }}">
-                <x-user-icon width="30px" height="30px" color="currentColor"/>
+            <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px]
+            {{ request()->routeIs('users*') ? ' bg-[#003D60] text-white' : 'hover:bg-transparent' }}">
+                <a href="{{ route('users') }}" >
+                    <x-user-icon width="30px" height="30px" color="currentColor"/>
+                </a>
             </li>
+
 
             <li class="p-2 hover:bg-[#003D60] cursor-pointer rounded-[10px] group hover:text-white">
                 <x-suport-icon width="30px" height="30px" color="currentColor"/>
             </li>
 
             <li class="p-2 bg-red-500 cursor-pointer rounded-[10px] ">
-                <a href="">
+                <button wire:click="$dispatch('confirm-logout')" class="">
                     <x-logout-icon width="30px" height="30px" color="currentColor"/>
-                </a>
+                </button>
             </li>
         </ul>
 

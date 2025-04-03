@@ -22,6 +22,9 @@ class CreateUserForm extends Form
     #[Validate('required|string')]
     public string $status = '1';
 
+    #[Validate('required|string')]
+    public string $role;
+
     #[Validate('required|string|min:6')]
     public string $password = '';
 }

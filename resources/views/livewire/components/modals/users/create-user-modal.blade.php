@@ -39,7 +39,7 @@
 
             <div class="mt-4 flex flex-col gap-2">
                 <label for="phone" class="text-gray-700 text-sm font-medium">Telefone <span class="text-red-500">*</span></label>
-                <input type="text" id="email" wire:model.defer="form.phone" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" placeholder="Telefone do usuário" required>
+                <input type="phone" id="phone" wire:model.defer="form.phone" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" placeholder="Telefone do usuário" required>
             </div>
 
             <div class="mt-4 flex flex-col gap-2">
@@ -61,6 +61,16 @@
                 <select id="status" wire:model.defer="form.status" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
                     <option value="1">Ativado</option>
                     <option value="2">Desativado</option>
+                </select>
+            </div>
+
+            <div class="mt-4 flex flex-col gap-2">
+                <label for="role" class="text-gray-700 text-sm font-medium">Acesso <span class="text-red-500">*</span></label>
+                <select id="role" wire:model.defer="form.role" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
+                    @foreach($roles as $role)
+                        <option value="£">{{ $role['name'] }}</option>
+                        <option value="2">{{ $role['name'] }}</option>
+                    @endforeach
                 </select>
             </div>
 

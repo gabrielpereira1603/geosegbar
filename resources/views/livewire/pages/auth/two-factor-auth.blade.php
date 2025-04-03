@@ -14,7 +14,7 @@
                 required
                 autofocus
                 autocomplete="none"
-                class="block border-b-2 border-t-0 border-l-0 border-r-0 w-full mt-1 px-0 py-2 border-gray-400 text-center"
+                class="font-ubuntu block border-b-2 border-t-0 border-l-0 border-r-0 w-full mt-1 px-0 py-2 border-gray-400 text-center focus:outline-none focus:ring-0 focus:border-gray-600"
                 placeholder="Digite o Código"
             />
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
