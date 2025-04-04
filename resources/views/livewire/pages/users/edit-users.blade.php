@@ -118,13 +118,19 @@
                             </h3>
 
                             <ul class="mt-2 space-y-2">
-                                @foreach ($permissions_form->dam_permission as $dam)
+                                @forelse ($permissions_form->dam_permission as $dam)
                                     <li class="flex justify-between">
                                         <label>{{ $dam['name'] }}</label>
-                                        <input type="checkbox" wire:model.live="permissions_form.dam_permission.{{ $loop->index }}.hasAccess"
-                                               class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60] " @if($dam['hasAccess']) checked @endif >
+                                        <input
+                                            type="checkbox"
+                                            wire:model.live="permissions_form.dam_permission.{{ $loop->index }}.hasAccess"
+                                            class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60]"
+                                            @if($dam['hasAccess']) checked @endif
+                                        >
                                     </li>
-                                @endforeach
+                                @empty
+                                    <li class="text-gray-500 italic">Nenhum cliente vinculado ao usuário.</li>
+                                @endforelse
                             </ul>
                         </div>
 

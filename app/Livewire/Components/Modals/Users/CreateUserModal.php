@@ -27,7 +27,7 @@ class CreateUserModal extends Component
 
     public function create()
     {
-        $this->validate();
+        $this->form->validate();
 
         $payload = [
             'email' => $this->form->email,
@@ -46,16 +46,13 @@ class CreateUserModal extends Component
         ];
 
         $response = $this->user_service->createUser($payload);
-
         if (!$response['success']) {
-            session()->flash('error', $response['message']);
             $this->dispatch('open-modal', 'create-user-modal');
             $this->dispatch('user-error', title: $response['message']);
 
             return;
         }
 
-        session()->flash('success', 'Usuário criado com sucesso!');
         $this->dispatch('close-modal', 'create-user-modal');
         $this->dispatch('user-success', title: $response['message']);
 
