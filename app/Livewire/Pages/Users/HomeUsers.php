@@ -21,7 +21,6 @@ class HomeUsers extends Component
         $this->user_service = new UserService('user');
 
         $response = $this->user_service->getAllUsers();
-
         if ($response['success']) {
             $this->users = $response['data'];
         }

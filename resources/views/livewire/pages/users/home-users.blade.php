@@ -67,7 +67,7 @@
                 <div class="w-[100%] sm:w-[400px] h-[1.5px] bg-[#003D60]"></div>
             </h1>
 
-            <div class="overflow-x-auto overflow-y-auto w-full max-h-[300px] rounded-[10px]">
+            <div class="overflow-x-auto overflow-y-auto w-full max-h-[400px] rounded-[10px]">
                 <table class="sm:max-h-[400px] w-full border-separate border-spacing-y-6 min-w-[600px]">
                     <thead>
                     <tr class="text-lg text-[#003D60] font-bold font-ubuntu">

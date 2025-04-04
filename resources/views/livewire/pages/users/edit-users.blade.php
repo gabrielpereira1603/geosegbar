@@ -182,7 +182,6 @@
                                     @endif
                                 @endforeach
                             </ul>
-
                         </div>
                     </div>
 
@@ -209,10 +208,10 @@
 
                 @if($hasPermissionChanges)
                     <div class="w-full flex gap-3 justify-center mt-5">
-                        <button wire:click="resetPermissionsForm" type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium">
-                            Descastar Alterações
+                        <button wire:click="" type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium">
+                            Descartar Alterações
                         </button>
-                        <button wire:click="savePermissionChanges" type="submit" class="bg-[#003D60] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#002a42]">
+                        <button wire:click="savePermissionChanges" type="button" class="bg-[#003D60] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#002a42]">
                             Salvar Permissões
                         </button>
                     </div>
@@ -230,8 +229,11 @@
                 title: 'Sucesso!',
                 text: event.title,
                 confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
             });
-            $wire.dispatch('load-users');
         });
 
         $wire.on('user-error', (event) => {
@@ -242,11 +244,6 @@
                 text: event.title,
                 confirmButtonText: 'Ok'
             });
-            $wire.dispatch('load-users');
-        });
-
-        $wire.on('load-table-users', () => {
-            $wire.dispatch('load-users');
         });
     </script>
     @endscript

@@ -94,13 +94,11 @@ class EditUsers extends Component
         $response = $this->user_service->updateUser($payload, $this->user_id);
 
         if (!$response['success']) {
-            session()->flash('error', $response['message']);
             $this->dispatch('user-errors', title: $response['message']);
             return;
         }
 
         $this->hasChanges = false;
-        session()->flash('success', 'Usuário criado com sucesso!');
         $this->dispatch('user-success', title: $response['message']);
     }
 
@@ -121,21 +119,22 @@ class EditUsers extends Component
 
     public function resetPermissionsForm()
     {
+        $this->hasChanges = false;
+
         $permissionsData = $this->permissions_service->getPermissionsByUserId($this->user_id)['data'] ?? [];
+
         $this->permissions_form->fill([
             'documentation_permission' => $permissionsData['documentationPermission'] ?? [],
             'attributions_permission' => $permissionsData['attributionsPermission'] ?? [],
             'instrumentation_permission' => $permissionsData['instrumentationPermission'] ?? [],
             'routine_inspection_permission' => $permissionsData['routineInspectionPermission'] ?? [],
             'dam_permission' => array_map(fn ($dam) => [
-                'id' => $dam['id'] ?? null,
+                'id' => $dam['dam']['id'] ?? null,
                 'name' => $dam['dam']['name'] ?? 'Sem Nome',
                 'hasAccess' => $dam['hasAccess'] ?? false,
             ], $permissionsData['damPermissions'] ?? []),
         ]);
 
-
-        $this->hasChanges = false;
     }
 
     public function savePermissionChanges()
@@ -170,6 +169,7 @@ class EditUsers extends Component
                 ->pluck('id')
                 ->toArray(),
         ];
+
         $response = $this->permissions_service->updatePermissionsByUserId($payload);
 
         if (!$response['success']) {
@@ -186,22 +186,20 @@ class EditUsers extends Component
         $this->user_id = $user_id;
 
         try {
-            $responseUser = $this->user_service->getUserById($this->user_id);
-            if (!empty($responseUser['success'])) {
-                $this->user = $responseUser['data'] ?? [];
-                $this->resetForm();
-            } else {
-                session()->flash('error', 'Erro ao carregar os dados do usuário.');
-            }
-        } catch (\Exception $e) {
-            Log::error('Erro ao buscar usuário: ' . $e->getMessage());
+            $responseUser = $this->user_service->getUserById($user_id);
+            $this->user = $responseUser['data'] ?? [];
+
+            $this->resetForm();
+
+            $this->sexes = $this->sex_service->getAllSexs()['data'] ?? [];
+            $this->roles = $this->role_service->getAllRoles()['data'] ?? [];
+
+            $this->resetPermissionsForm();
+        } catch (\Throwable $e) {
+            Log::error('Erro ao carregar dados do usuário para edição', ['error' => $e->getMessage()]);
         }
-
-        $this->resetPermissionsForm();
-
-        $this->sexes = $this->sex_service->getAllSexs()['data'] ?? [];
-        $this->roles = $this->role_service->getAllRoles()['data'] ?? [];
     }
+
 
     public function render()
     {
