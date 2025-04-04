@@ -37,6 +37,7 @@ class VerifyToken extends Component
     }
 
     public function verifyToken(){
+        $this->is_loading = true;
         $this->validate();
 
         $payload = [
@@ -54,8 +55,7 @@ class VerifyToken extends Component
             return redirect()->route('change_password')->with('success', $response['message']);
         }
 
-        session()->forget(['email_recovery', 'email_recovery_expires_at']);
-        return redirect()->route('recover_password')->with('error', $response['message']);
+        $this->dispatch('user-error', title: $response['message']);
     }
 
     public function render()

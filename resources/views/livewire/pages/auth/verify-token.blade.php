@@ -35,13 +35,36 @@
 
         <div class="w-full mt-6 mb-4 flex items-center">
             <button type="submit" class="w-full flex items-center justify-center p-6 hover:bg-[#003D60]/85 bg-[#003D60] rounded-[10px] uppercase font-bold text-white">
-                <span wire:loading.remove wire:target="sendLink" class="font-ubuntu">
+                <span wire:loading.remove wire:target="verifyToken" class="font-ubuntu">
                     {{ __('Verificar Código') }}
                 </span>
-                <span wire:loading wire:target="sendLink">
+                <span wire:loading wire:target="verifyToken">
                     Verificando Código...
                 </span>
             </button>
         </div>
     </form>
+    @script
+    <script>
+        $wire.on('user-success', (event) => {
+            console.log(event)
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: event.title,
+                confirmButtonText: 'Ok'
+            });
+        });
+
+        $wire.on('user-error', (event) => {
+            console.log(event)
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: event.title,
+                confirmButtonText: 'Ok'
+            });
+        });
+    </script>
+    @endscript
 </div>

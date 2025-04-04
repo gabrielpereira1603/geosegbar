@@ -41,7 +41,6 @@
                 text: event.title,
                 confirmButtonText: 'Ok'
             });
-            $wire.dispatch('load-users');
         });
 
         $wire.on('user-error', (event) => {
@@ -52,11 +51,6 @@
                 text: event.title,
                 confirmButtonText: 'Ok'
             });
-            $wire.dispatch('load-users');
-        });
-
-        $wire.on('load-table-users', () => {
-            $wire.dispatch('load-users');
         });
     </script>
     @endscript

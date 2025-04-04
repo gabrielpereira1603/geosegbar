@@ -129,7 +129,7 @@
                                         >
                                     </li>
                                 @empty
-                                    <li class="text-gray-500 italic">Nenhum cliente vinculado ao usuário.</li>
+                                    <li class="text-gray-500 italic">Nenhuma estrutura vinculado ao usuário.</li>
                                 @endforelse
                             </ul>
                         </div>
