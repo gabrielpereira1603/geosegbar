@@ -9,12 +9,11 @@ use Livewire\Component;
 
 class ChangePasswordUserModal extends Component
 {
-    public $step = 1;
     public ChangePasswordUserForm $form;
 
     private UserService $user_service;
 
-    public $isEditing = false;
+    public $logged_user;
 
     public bool $is_loading = false;
 
@@ -23,52 +22,34 @@ class ChangePasswordUserModal extends Component
         $this->user_service = new UserService('user');
     }
 
-    public function mount()
+    public function mount(): void
     {
-        $user = session('user');
-        $this->form->user = $user;
+        $this->logged_user = session('user');
     }
 
-    public function startEditing(): void
+    public function changePassword(): void
     {
-        $this->step = 2;
+        $this->form->validate();
 
-    }
-
-    public function cancelEditing(): void
-    {
-        $user = session('user');
-        $this->step = 1;
-        $this->isEditing = false;
-    }
-
-    public function nextStep(){
-        $this->step = 3;
-    }
-
-
-    public function changePassword() {
-        $this->validate();
-
-        $payload = [
+        $response = $this->user_service->changePassword($this->logged_user['id'],[
             'currentPassword' => $this->form->current_password,
-            'newPassword' => $this->form->password,
-        ];
+            'newPassword' => $this->form->password
+        ]);
 
-        $response = $this->user_service->changePassword($this->form->user['id'],$payload,);
+        if ($response['success']) {
+            $this->dispatch('user-success', title: $response['message']);
+            $this->dispatch('close-modal', ['change-password-user']);
+        } else{
 
-        if (!$response['success']) {
-            session()->flash('error', $response['message']);
-            $this->dispatch('open-modal', 'change-password-user');
             $this->dispatch('user-error', title: $response['message']);
-            return;
         }
-
-        $this->dispatch('close-modal', 'change-password-user');
-        $this->isEditing = false;
-        $this->dispatch('user-success', title: $response['message']);
     }
 
+
+    public function closeModal(){
+        $this->dispatch('close-modal', ['change-password-user']);
+        $this->form->reset();
+    }
     public function render()
     {
         return view('livewire.components.modals.users.change-password-user-modal');

@@ -32,7 +32,6 @@ class CreateUserModal extends Component
     public function mount()
     {
         $response = $this->roleService->getAllRoles();
-
         $this->logged_user = session('user');
 
         if (!$response['success']) {
@@ -40,10 +39,18 @@ class CreateUserModal extends Component
             $this->dispatch('open-modal', 'create-user-modal');
             $this->dispatch('user-error', title: $response['message']);
             $this->roles = [];
-
             return;
         }
-        $this->roles = $response['data'];
+
+        $roles = $response['data'];
+
+        if (strtolower($this->logged_user['role']) === 'collaborator') {
+            $roles = array_filter($roles, function ($role) {
+                return strtolower($role['name']) !== 'admin';
+            });
+        }
+
+        $this->roles = array_values($roles);
     }
 
     public function updatedFormRole($roleId)
@@ -82,7 +89,9 @@ class CreateUserModal extends Component
             'createdById' => $this->logged_user['id'],
             'sourceUserId' => $this->form->collaborator_id,
         ];
+
         $response = $this->user_service->createUser($payload);
+
         if (!$response['success']) {
             $this->dispatch('open-modal', 'create-user-modal');
             $this->dispatch('user-error', title: $response['message']);
