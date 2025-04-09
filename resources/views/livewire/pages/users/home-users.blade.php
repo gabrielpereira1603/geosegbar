@@ -102,7 +102,9 @@
                                                     Desativar Usuário
                                                 </span>
                                             @else
-                                                <a href="javascript:void(0)" @mouseenter="tooltip = true" @mouseleave="tooltip = false">
+                                                <a href="javascript:void(0)"
+                                                   wire:click="$dispatch('enable-user', { id: {{ $user['id'] }} });"
+                                                   @mouseenter="tooltip = true" @mouseleave="tooltip = false">
                                                     <x-active-user-icon width="20px" height="20px" color="green"/>
                                                 </a>
                                                 <span x-show="tooltip" class="absolute top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded p-1">
@@ -126,6 +128,7 @@
                             </tr>
                         @endforeach
                         <livewire:components.modals.users.disable-user-modal/>
+                        <livewire:components.modals.users.enable-user-modal/>
                         <livewire:components.modals.users.delete-user-modal/>
                         <livewire:components.modals.auth.change-password-first-login-modal/>
                         <a href="javascript:void(0)" @click="$dispatch('open-modal', 'first-access-modal')" hidden id="open-modal-first-login"></a>
