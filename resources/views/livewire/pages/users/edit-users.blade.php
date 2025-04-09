@@ -1,3 +1,6 @@
+@php
+    $isCollaborator = $logged_user['role'] === 'COLLABORATOR';
+@endphp
 <div>
     <div class="flex flex-col gap-6 bg-white shadow-xl shadow-gray-400 rounded-[10px] p-6 sm:mr-10 sm:ml-10">
         <div class="flex items-center flex-col gap-2 justify-center p-5 sm:p-5 bg-gray-100 shadow-xl shadow-gray-400 rounded-[10px]">
@@ -16,7 +19,7 @@
                     <div class="relative">
                         <label class="text-gray-700 text-sm font-medium mb-1 block">Nome</label>
                         <div class="relative">
-                            <input type="text" wire:model.live="form.name" placeholder="Digite o nome"
+                            <input type="text" wire:model.live="form.name" {{ $isCollaborator ? 'disabled' : '' }} placeholder="Digite o nome"
                                    class="w-full p-3 pr-10 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#003D60]">
                             <div class="absolute inset-y-0 right-3 flex items-center text-gray-400">
                                 <x-edit-icon width="16px" height="16px" color="currentColor"/>
@@ -32,6 +35,7 @@
                             <input type="email"
                                    wire:model.live.debounce.250ms="form.email"
                                    placeholder="Digite o email"
+                                   {{ $isCollaborator ? 'disabled' : '' }}
                                    class="w-full p-3 pr-10 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#003D60]">
                             <div class="absolute inset-y-0 right-3 flex items-center text-gray-400">
                                 <x-edit-icon width="16px" height="16px" color="currentColor"/>
@@ -47,6 +51,7 @@
                             <input type="text"
                                    wire:model.live="form.phone"
                                    placeholder="Digite o Telefone"
+                                   {{ $isCollaborator ? 'disabled' : '' }}
                                    class="w-full p-3 pr-10 border border-gray-300 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#003D60]">
                             <div class="absolute inset-y-0 right-3 flex items-center text-gray-400">
                                 <x-edit-icon width="16px" height="16px" color="currentColor"/>
@@ -106,6 +111,7 @@
                                             wire:model.live="permissions_form.dam_permission.{{ $loop->index }}.hasAccess"
                                             class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60]"
                                             @if($dam['hasAccess']) checked @endif
+                                            {{ $isCollaborator ? 'disabled' : '' }}
                                         >
                                     </li>
                                 @empty
@@ -124,8 +130,12 @@
                                     @if(!in_array($key, ['id', 'user']))
                                         <li class="flex justify-between">
                                             <label>{{ $documentationLabels[$key] ?? ucfirst(str_replace('_', ' ', $key)) }}</label>
-                                            <input type="checkbox" wire:model.live="permissions_form.documentation_permission.{{ $key }}"
-                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60] " @if($value) checked @endif>
+                                            <input type="checkbox"
+                                                   wire:model.live="permissions_form.documentation_permission.{{ $key }}"
+                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60]"
+                                                   @if($value) checked @endif
+                                                {{ $isCollaborator ? 'disabled' : '' }}
+                                            >
                                         </li>
                                     @endif
                                 @endforeach
@@ -142,8 +152,12 @@
                                     @if(!in_array($key, ['id', 'user']))
                                         <li class="flex justify-between">
                                             <label>{{ $attributionsLabels[$key] ?? ucfirst(str_replace('_', ' ', $key)) }}</label>
-                                            <input type="checkbox" wire:model.live="permissions_form.attributions_permission.{{ $key }}"
-                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60] " @if($value) checked @endif>
+                                            <input type="checkbox"
+                                                   wire:model.live="permissions_form.attributions_permission.{{ $key }}"
+                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60]"
+                                                   @if($value) checked @endif
+                                                {{ $isCollaborator ? 'disabled' : '' }}
+                                            >
                                         </li>
                                     @endif
                                 @endforeach
@@ -162,8 +176,12 @@
                                     @if(!in_array($key, ['id', 'user']))
                                         <li class="flex justify-between">
                                             <label>{{ $instrumentationLabels[$key] ?? ucfirst(str_replace('_', ' ', $key)) }}</label>
-                                            <input type="checkbox" wire:model.live="permissions_form.instrumentation_permission.{{ $key }}"
-                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60] " @if($value) checked @endif>
+                                            <input type="checkbox"
+                                                   wire:model.live="permissions_form.instrumentation_permission.{{ $key }}"
+                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60]"
+                                                   @if($value) checked @endif
+                                                {{ $isCollaborator ? 'disabled' : '' }}
+                                            >
                                         </li>
                                     @endif
                                 @endforeach
@@ -182,8 +200,12 @@
                                     @if(!in_array($key, ['id', 'user']))
                                         <li class="flex justify-between">
                                             <label>{{ $routineInspectionLabels[$key] ?? ucfirst(str_replace('_', ' ', $key)) }}</label>
-                                            <input type="checkbox" wire:model.live="permissions_form.routine_inspection_permission.{{ $key }}"
-                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60] " @if($value) checked @endif>
+                                            <input type="checkbox"
+                                                   wire:model.live="permissions_form.routine_inspection_permission.{{ $key }}"
+                                                   class="form-checkbox rounded-[3px] default:bg-[#003D60] checked:bg-[#003D60]"
+                                                   @if($value) checked @endif
+                                                {{ $isCollaborator ? 'disabled' : '' }}
+                                            >
                                         </li>
                                     @endif
                                 @endforeach

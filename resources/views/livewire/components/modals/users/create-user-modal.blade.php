@@ -54,9 +54,10 @@
 
             @if(!empty($collaborators))
                 <div class="mt-4 flex flex-col gap-2">
-                    <label for="collaborator" class="text-gray-700 text-sm font-medium">Selecionar Colaborador</label>
+                    <label for="collaborator" class="text-gray-700 text-sm font-medium">Selecione um colaborador para replicar as permissões</label>
                     <select id="collaborator" wire:model.defer="form.collaborator_id" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900">
-                        <option value="">Selecione um colaborador:</option>
+                        <option>Selecione um colaborador:</option>
+                        <option>Nenhuma Permissão</option>
                         @foreach($collaborators as $collaborator)
                             <option value="{{ $collaborator['id'] }}">{{ $collaborator['name'] }}</option>
                         @endforeach
