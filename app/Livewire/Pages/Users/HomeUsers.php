@@ -20,6 +20,7 @@ class HomeUsers extends Component
     #[On('load-users')]
     public function mount()
     {
+
         $this->logged_user = session('user');
         if ($this->logged_user['isFirstAccess'] === true) {
             $this->dispatch('open-modal-first-access');

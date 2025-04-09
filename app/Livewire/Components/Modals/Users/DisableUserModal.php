@@ -48,6 +48,9 @@ class DisableUserModal extends Component
             'status' => [
                 'id'=> '2',
             ],
+            'role' => [
+                'id'=> $this->user['role']['id'],
+            ]
         ];
 
         $response = $this->user_service->updateUser($payload, $this->user_id);

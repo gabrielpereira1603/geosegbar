@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 
 class EditUsers extends Component
 {
+    public $logged_user;
+
     public EditUserForm $form;
     public EditPermissionsUserForm $permissions_form;
 
@@ -26,6 +28,7 @@ class EditUsers extends Component
     public array $roles = [];
     public bool $hasChanges = false;
     public bool $hasPermissionChanges = false;
+
     public bool $is_loading = false;
 
     public $instrumentationLabels = [
@@ -183,6 +186,7 @@ class EditUsers extends Component
 
     public function mount($user_id)
     {
+        $this->logged_user = session('user');
         $this->user_id = $user_id;
 
         try {

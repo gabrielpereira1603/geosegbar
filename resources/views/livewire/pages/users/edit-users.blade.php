@@ -10,7 +10,7 @@
                 <div class="w-[100%] sm:w-[400px] h-[1.5px] bg-[#003D60]"></div>
             </h1>
 
-            <ul class="w-full flex gap-6 flex-col sm:flex-row sm:items-start justify-center p-5">
+            <ul class="w-full flex gap-6 flex-col sm:flex-row sm:items-start justify-center px-5 py-2 mt-2">
 
                 <li class="w-full flex flex-col">
                     <div class="relative">
@@ -56,44 +56,24 @@
                 </li>
             </ul>
 
-            <ul class="w-full flex gap-6 flex-col sm:flex-row sm:items-start justify-center p-5">
-
-                <li class="w-full flex flex-col">
-                    <div class="relative">
-                        <label class="text-gray-700 text-sm font-medium mb-1 block">Sexo:</label>
-                        <select wire:model.live="form.sex" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900">
-                            @foreach($sexes as $sex)
-                                <option value="{{ $sex['id'] }}">{{ $sex['name'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </li>
-
-                <li class="w-full flex flex-col">
-                    <div class="relative">
-                        <label class="text-gray-700 text-sm font-medium mb-1 block">Status</label>
-                        <div class="relative">
-                            <select id="status" wire:model.live="form.status" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
-                                <option value="1">Ativado</option>
-                                <option value="2">Desativado</option>
-                            </select>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="w-full flex flex-col">
-                    <div class="relative">
-                        <label class="text-gray-700 text-sm font-medium mb-1 block">Papel:</label>
-                        <select wire:model.live="form.role" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900">
-                            @foreach($roles as $role)
-                                <option value="{{ $role['id'] }}" {{ $form->role == $role['id'] ? 'selected' : '' }} >
-                                    {{ $role['description'] }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </li>
-            </ul>
+            @isset($logged_user)
+                @if($logged_user['role'] === 'ADMIN')
+                    <ul class="w-full flex gap-6 flex-col sm:flex-row sm:items-start justify-center px-5 py-2">
+                        <li class="w-full flex flex-col">
+                            <div class="relative">
+                                <label class="text-gray-700 text-sm font-medium mb-1 block">Papel:</label>
+                                <select wire:model.live="form.role" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900">
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role['id'] }}" {{ $form->role == $role['id'] ? 'selected' : '' }} >
+                                            {{ $role['description'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                @endif
+            @endisset
 
             @if($hasChanges)
                 <div class="flex gap-3">
