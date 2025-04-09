@@ -33,11 +33,11 @@ class Login extends Component
             ];
 
             $authResponse = $this->auth_service->login($credentials);
-
             if (isset($authResponse['success']) && $authResponse['success'] === true) {
                 session(['auth_message' => $authResponse['message']]);
                 session(['two_factor_start' => Carbon::now()]);
                 session(['two_factor_email' => $this->form->email]);
+                session(['two_factor_password' => $this->form->password]);
                 return $this->redirect('/token-two-factor');
             }
 

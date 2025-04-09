@@ -30,7 +30,28 @@
                 </span>
             </button>
         </div>
+        <div class="w-full mt-6 mb-4 flex items-center">
+            @if ($showResendButton)
+                <button
+                    wire:click.prevent="resendCode"
+                    wire:loading.attr="disabled"
+                    wire:loading.class="bg-blue-300"
+                    wire:loading.class.remove="bg-red-500"
+                    class="w-full flex items-center justify-center p-6 bg-red-500 rounded-lg font-bold text-white"
+                >
+            <span wire:loading.remove>
+                {{ __('Reenviar Código') }}
+            </span>
+                </button>
+            @else
+                <div wire:poll.1000ms="decrementTimer" class="w-full text-center">
+                    Aguarde {{ $resendTimer }} segundos para reenviar o código.
+                </div>
+            @endif
+        </div>
+
     </form>
+
     @script
     <script>
         $wire.on('user-success', (event) => {

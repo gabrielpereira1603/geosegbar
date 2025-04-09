@@ -59,6 +59,36 @@ class UserService
         return $response->json();
     }
 
+    public function filterGetAllUsers($filters = [])
+    {
+        $token = Session::get('token');
+
+        if (!$token) {
+            throw new HttpException(401, 'Token de autenticação não encontrado');
+        }
+
+        $role_id = is_array($filters['role_id'] ?? null) ? $filters['role_id']['id'] : $filters['role_id'] ?? null;
+        $client_id = $filters['client_id'] ?? null;
+
+        $url = $this->apiUrl . '/filter?roleId=' . $role_id;
+
+        if ($client_id) {
+            $url .= '&clientId=' . $client_id;
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json',
+        ])->get($url);
+
+        if (!$response->successful()) {
+            return $this->handleError($response);
+        }
+
+        return $response->json();
+    }
+
+
     public function updateUser($payload, $user_id)
     {
         $token = Session::get('token');

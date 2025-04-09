@@ -38,7 +38,6 @@ class AuthService
     {
         try {
             $response = Http::post("{$this->apiUrl}/login/verify", $credentials);
-
             if ($response->successful()) {
                 return $response->json();
             }

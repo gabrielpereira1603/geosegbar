@@ -29,7 +29,6 @@ class RecoverPassword extends Component
         ];
 
         $response = $this->user_service->forgotPassword($payload);
-
         if ($response['success']) {
             session()->put('email_recovery', $this->email);
             session()->put('email_recovery_expires_at', now()->addMinutes(10));

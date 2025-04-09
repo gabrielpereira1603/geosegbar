@@ -1,6 +1,5 @@
 <div>
     <div class="flex flex-col gap-6 bg-white shadow-xl shadow-gray-400 rounded-[10px] p-6 sm:mr-10 sm:ml-10">
-
         <div class="flex items-center flex-col gap-5 justify-center p-5 sm:p5 bg-gray-100 shadow-xl shadow-gray-400 rounded-[10px]">
             <h1 class="font-ubuntu flex items-center justify-center gap-4 flex-col w-full text-[#003D60] text-lg font-bold">
                 Minha Conta
@@ -20,6 +19,7 @@
                         </button>
                     </a>
                 </li>
+
                 <livewire:components.modals.users.edit-phone-user-modal/>
 
                 <li>
@@ -43,11 +43,6 @@
                 <livewire:components.modals.users.edit-email-user-modal/>
             </ul>
         </div>
-        @script
-        <script>
-
-        </script>
-        @endscript
         <div class="relative flex items-center flex-col gap-5 justify-center p-5 bg-gray-100 shadow-xl shadow-gray-400 rounded-[10px] overflow-auto">
             <div class="w-full sm-w-auto sm:absolute top-4 left-6 flex items-center">
                 <a href="javascript:void(0)" @click="$dispatch('open-modal', 'create-user-modal')">
@@ -74,7 +69,6 @@
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Nome</th>
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Email</th>
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Telefone</th>
-                        <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Status</th>
                         <th class="text-[20px] font-bold leading-none tracking-normal text-center align-middle px-4 py-2">Ações</th>
                     </tr>
 
@@ -85,13 +79,6 @@
                                 <td class="text-center p-6 rounded-l-[10px] text-lg text-gray-950 font-light font-sans">{{ $user['name'] }}</td>
                                 <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">{{ $user['email'] }}</td>
                                 <td class="text-center p-6 text-lg text-gray-950 font-light font-sans">{{ $user['phone'] }}</td>
-                                <td class="text-center p-6">
-                                    @if($user['status']['id'] === 1)
-                                        <x-check-circle-icon width="24px" height="24px" color="green" class="inline-block"/>
-                                    @else
-                                        <x-cross-circle-icon width="24px" height="24px" color="red" class="inline-block"/>
-                                    @endif
-                                </td>
 
                                 <td class="p-6 rounded-r-[10px] text-lg text-gray-950 font-light font-sans">
                                     <ul class="flex items-center justify-center gap-5">
@@ -140,6 +127,8 @@
                         @endforeach
                         <livewire:components.modals.users.disable-user-modal/>
                         <livewire:components.modals.users.delete-user-modal/>
+                        <livewire:components.modals.auth.change-password-first-login-modal/>
+                        <a href="javascript:void(0)" @click="$dispatch('open-modal', 'first-access-modal')" hidden id="open-modal-first-login"></a>
                     </tbody>
                 </table>
             </div>
@@ -148,9 +137,19 @@
 
     @script
     <script>
-        // Ouve o evento 'create-user-success' disparado pelo Livewire
+        $wire.on('open-modal-first-access', (event) => {
+            setTimeout(() => {
+                const button = document.getElementById('open-modal-first-login');
+
+                if (button) {
+                    button.click();
+                } else {
+                    console.warn('Botão não encontrado');
+                }
+            }, 100);
+        });
+
         $wire.on('user-success', (event) => {
-            console.log(event)
             Swal.fire({
                 icon: 'success',
                 title: 'Sucesso!',
@@ -160,9 +159,7 @@
             $wire.dispatch('load-users');
         });
 
-        // Ouve o evento 'create-user-error' disparado pelo Livewire
         $wire.on('user-error', (event) => {
-            console.log(event)
             Swal.fire({
                 icon: 'error',
                 title: 'Erro!',

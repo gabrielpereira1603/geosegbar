@@ -38,41 +38,31 @@
             </div>
 
             <div class="mt-4 flex flex-col gap-2">
-                <label for="phone" class="text-gray-700 text-sm font-medium">Telefone <span class="text-red-500">*</span></label>
+                <label for="phone" class="text-gray-700 text-sm font-medium">Telefone </label>
                 <input type="phone" id="phone" wire:model.defer="form.phone" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" placeholder="Telefone do usuário" required>
             </div>
 
             <div class="mt-4 flex flex-col gap-2">
-                <label for="password" class="text-gray-700 text-sm font-medium">Senha <span class="text-red-500">*</span></label>
-                <input type="password" id="password" wire:model.defer="form.password" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" placeholder="Senha do usuário" required>
-            </div>
-
-            <div class="mt-4 flex flex-col gap-2">
-                <label for="sex" class="text-gray-700 text-sm font-medium">Sexo <span class="text-red-500">*</span></label>
-                <select id="sex" wire:model.defer="form.sex" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
-                    <option value="1">Masculino</option>
-                    <option value="2">Feminino</option>
-                    <option value="3">Outro</option>
-                </select>
-            </div>
-
-            <div class="mt-4 flex flex-col gap-2">
-                <label for="status" class="text-gray-700 text-sm font-medium">Status <span class="text-red-500">*</span></label>
-                <select id="status" wire:model.defer="form.status" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
-                    <option value="1">Ativado</option>
-                    <option value="2">Desativado</option>
-                </select>
-            </div>
-
-            <div class="mt-4 flex flex-col gap-2">
                 <label for="role" class="text-gray-700 text-sm font-medium">Acesso <span class="text-red-500">*</span></label>
-                <select id="role" wire:model.defer="form.role" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
+                <select id="role" wire:model.live="form.role" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900" required>
                     <option>Selecione um acesso:</option>
                     @foreach($roles as $role)
-                        <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
+                        <option value="{{ $role['id'] }}">{{ $role['description'] }}</option>
                     @endforeach
                 </select>
             </div>
+
+            @if(!empty($collaborators))
+                <div class="mt-4 flex flex-col gap-2">
+                    <label for="collaborator" class="text-gray-700 text-sm font-medium">Selecionar Colaborador</label>
+                    <select id="collaborator" wire:model.defer="form.collaborator_id" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#003D60] text-lg text-gray-900">
+                        <option value="">Selecione um colaborador:</option>
+                        @foreach($collaborators as $collaborator)
+                            <option value="{{ $collaborator['id'] }}">{{ $collaborator['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
 
 
             <div class="mt-6 flex justify-end gap-4">

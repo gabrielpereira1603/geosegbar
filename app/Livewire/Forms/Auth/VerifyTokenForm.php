@@ -12,4 +12,6 @@ class VerifyTokenForm extends Form
 
     #[Validate('required|string')]
     public string $code = '';
+
+    public string $password;
 }
