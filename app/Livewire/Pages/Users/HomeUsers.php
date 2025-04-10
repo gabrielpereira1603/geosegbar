@@ -20,7 +20,6 @@ class HomeUsers extends Component
     #[On('load-users')]
     public function mount()
     {
-
         $this->logged_user = session('user');
         if ($this->logged_user['isFirstAccess'] === true) {
             $this->dispatch('open-modal-first-access');
@@ -36,7 +35,6 @@ class HomeUsers extends Component
 
     public function render()
     {
-
         return view('livewire.pages.users.home-users', [
             'users' => $this->users
         ])->layout('layouts.app');
